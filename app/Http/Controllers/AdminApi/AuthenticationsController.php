@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\AdminApi;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthenticationsCreateTokenRequest;
 use App\Models\Users;
 
-class Authontication extends Controller
+class AuthenticationsController extends Controller
 {
     /**
      * 登录

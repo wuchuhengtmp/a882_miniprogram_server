@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Hash;
 
 class Handler extends ExceptionHandler
 {
@@ -50,6 +52,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        // 格式化以验证异常
+        if ($exception instanceof ValidationException) {
+            $message = $exception->validator->getMessageBag()->first();
+
+            return response([
+                'success' => false,
+                'errorCode' => '40000',
+                'errorMessage' => $message
+            ]);
+            exit;
+        }
         return parent::render($request, $exception);
     }
+
 }

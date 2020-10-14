@@ -14,12 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 // 微信小程序接口
 Route::prefix('wechat')->name('api.wechat.')->group(function() {
-    Route::get('test', [\App\Http\Controllers\Api\Authontication::class, 'index']);
+    Route::post('authentications', [\App\Http\Controllers\Api\Authontication::class, 'create']);
+});
+
+// 后台接口
+Route::prefix('admin')->name('api.admin.')->group(function() {
+    Route::post('authentications', [\App\Http\Controllers\AdminApi\AuthenticationsController::class, 'create']);
 });
 
 
