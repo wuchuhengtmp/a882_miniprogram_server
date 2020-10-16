@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\Users;
+use App\Models\UsersModel;
 
 class GenerateToken extends Command
 {
@@ -30,7 +30,7 @@ class GenerateToken extends Command
     {
         $userId = $this->ask('输入用户 id');
 
-        $user = Users::find($userId);
+        $user = UsersModel::find($userId);
 
         if (!$user) {
             return $this->error('用户不存在');

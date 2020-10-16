@@ -4,7 +4,7 @@ namespace App\Http\Controllers\AdminApi;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthenticationsCreateTokenRequest;
-use App\Models\Users;
+use App\Models\UsersModel;
 
 class AuthenticationsController extends Controller
 {
@@ -16,7 +16,7 @@ class AuthenticationsController extends Controller
     public function create(AuthenticationsCreateTokenRequest $request)
     {
         $validated = $request->validated();
-        $user = Users::where('username', $validated['username'])->first();
+        $user = UsersModel::where('username', $validated['username'])->first();
         $token = auth('api')->login($user);
         return $this->successResponse(['token' => $token]);
     }

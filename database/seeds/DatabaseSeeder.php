@@ -17,5 +17,10 @@ class DatabaseSeeder extends Seeder
          // users
         DB::insert(' INSERT INTO `users` (`id`, `username`, `email`, `email_verified_code`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (\'1\', \'admin\', NULL, NULL, NULL, \'$2y$10$DMiV2xdfz755wLr5RG9.wOU7o4ygqOKq9vM7xxoxXFrAHKL4hOTkC\', NULL, NULL, NULL)');
 
+        // roles
+        DB::insert('INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES (\'1\', \'admin\', NULL, NULL)');
+
+        // user role
+        DB::insert('INSERT INTO `user_roles` (`id`, `role_id`, `user_id`, `created_at`, `updated_at`) VALUES (\'1\', \'1\', \'1\', NULL, NULL)');
     }
 }

@@ -11,12 +11,18 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function successResponse($data = null)
+
+    /**
+     * @param null $data
+     * @param int $showType 前端处理方式  0 silent; 1 message.warn; 2 message.error; 4 notification; 9 page
+     */
+    public function successResponse($data = null, $showType  = 0)
     {
         $returnData = [
             'success' => true
         ];
         if ($data) $returnData += ['data' => $data];
+        if ($showType !== 0) $returnData += ['showType' => $showType];
         return response($returnData);
     }
 }

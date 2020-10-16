@@ -24,7 +24,13 @@ Route::prefix('wechat')->name('api.wechat.')->group(function() {
 
 // 后台接口
 Route::prefix('admin')->name('api.admin.')->group(function() {
+    // 登录
     Route::post('authentications', [\App\Http\Controllers\AdminApi\AuthenticationsController::class, 'create']);
+    // 账号信息
+    Route::middleware('auth:api')->group(function() {
+        Route::get('users/me', [\App\Http\Controllers\AdminApi\UsersController::class, 'show']);
+    });
+
 });
 
 

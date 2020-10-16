@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Users;
+use App\Models\UsersModel;
 use Illuminate\Support\Facades\Hash;
 
 class AuthenticationsCreateTokenRequest extends FormRequest
@@ -46,7 +46,7 @@ class AuthenticationsCreateTokenRequest extends FormRequest
                 function($attribute, $value, $fail) use ($username, $password) {
                     $errorMsg = '账号或者密码错误';
                     if ($username && $password) {
-                        $user = Users::where('username', $username)->first();
+                        $user = UsersModel::where('username', $username)->first();
                         if (!$user) {
                             $fail($errorMsg);
                         } else if(!Hash::check($password, $user->password)) {
