@@ -3,10 +3,11 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
-class CreateRegionsTable extends Migration
+class CreateCategoresTable extends Migration
 {
-    public $tableName = 'regions';
+    public $tableName = 'categores';
     /**
      * Run the migrations.
      *
@@ -16,18 +17,13 @@ class CreateRegionsTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('parent_id');
-            $table->string('short_name');
-            $table->smallInteger('level_type');
-            $table->string('city_code');
-            $table->string('zip_code');
-            $table->string('merger_name');
-            $table->float('longitude');
-            $table->float('latitude');
-            $table->string('pinyin');
+            $table->string('name')->comment('分类名');
+            $table->integer('order_no')
+                ->default(0)
+                ->comment('排序号');
             $table->timestamps();
         });
+        DB::select("ALTER TABLE {$this->tableName} COMMENT = '车辆分类表'");
     }
 
     /**

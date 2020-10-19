@@ -29,8 +29,10 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
     // 账号信息
     Route::middleware('auth:api')->group(function() {
         Route::get('users/me', [\App\Http\Controllers\AdminApi\UsersController::class, 'show']);
+        Route::get('management/categores', [\App\Http\Controllers\AdminApi\CategoresController::class, 'index']);
+        Route::post('management/categores', [\App\Http\Controllers\AdminApi\CategoresController::class, 'create']);
+        Route::patch('management/categores/{id}', [\App\Http\Controllers\AdminApi\CategoresController::class, 'update']);
     });
-
 });
 
 

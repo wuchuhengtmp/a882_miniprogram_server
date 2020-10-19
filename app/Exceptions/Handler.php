@@ -59,7 +59,7 @@ class Handler extends ExceptionHandler
 
             return response([
                 'success' => false,
-                'errorCode' => '40000',
+                'errorCode' => 40000,
                 'errorMessage' => $message,
                 'showType' => 4
             ]);
@@ -67,13 +67,17 @@ class Handler extends ExceptionHandler
             // 无权限
             return response([
                 'success' => false,
-                'errorCode' => '40001',
+                'errorCode' => 40001,
                 'errorMessage' => '请求失败，令牌鉴权失败',
             ]);
+        } else if ($exception instanceof BaseException){
+            // 业务处理产生的异常
+            return response([
+                'success' => false,
+                'errorCode' => $exception->getCode(),
+                'errorMessage' => $exception->getMessage()
+            ]);
         }
-
-
-
         return parent::render($request, $exception);
     }
 
