@@ -32,6 +32,10 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
         Route::get('management/categores', [\App\Http\Controllers\AdminApi\CategoresController::class, 'index']);
         Route::post('management/categores', [\App\Http\Controllers\AdminApi\CategoresController::class, 'create']);
         Route::patch('management/categores/{id}', [\App\Http\Controllers\AdminApi\CategoresController::class, 'update']);
+        // 品牌分类管理
+        Route::post('management/brands', [\App\Http\Controllers\AdminApi\BrandsController::class, 'create']);
+        Route::patch('management/brands/{id}', [\App\Http\Controllers\AdminApi\BrandsController::class, 'edit']);
+        Route::get('management/brands', [\App\Http\Controllers\AdminApi\BrandsController::class, 'index']);
     });
 });
 

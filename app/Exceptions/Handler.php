@@ -6,6 +6,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
+use App\Exceptions\ValidateException as DiyValidateException;
 use Illuminate\Auth\AuthenticationException;
 
 class Handler extends ExceptionHandler
@@ -56,12 +57,18 @@ class Handler extends ExceptionHandler
         // 验证异常
         if ($exception instanceof ValidationException) {
             $message = $exception->validator->getMessageBag()->first();
-
             return response([
                 'success' => false,
                 'errorCode' => 40000,
                 'errorMessage' => $message,
                 'showType' => 4
+            ]);
+        }  else if ($exception instanceof  DiyValidateException) {
+            return response([
+                'success' => false,
+                'errorCode' => $exception->getCode(),
+                'errorMessage' => $exception->getMessage(),
+                'showType' => $exception->_showType
             ]);
         } else if ($exception instanceof AuthenticationException) {
             // 无权限

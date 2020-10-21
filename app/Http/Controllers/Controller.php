@@ -21,7 +21,7 @@ class Controller extends BaseController
         $returnData = [
             'success' => true
         ];
-        if ($data) $returnData += ['data' => $data];
+        if (is_array($data)) $returnData += ['data' => $data];
         if ($showType !== 0) $returnData += ['showType' => $showType];
         return response($returnData);
     }

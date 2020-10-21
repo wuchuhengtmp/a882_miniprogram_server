@@ -29,7 +29,7 @@ class CategoresController extends Controller
         $categoryCo = $this->_categoresModel
             ->select('id', 'name', 'order_no')
             ->get();
-        return $this->successResponse($categoryCo ->toArray());
+       return $this->successResponse($categoryCo ->toArray());
     }
 
     public function update($id)
