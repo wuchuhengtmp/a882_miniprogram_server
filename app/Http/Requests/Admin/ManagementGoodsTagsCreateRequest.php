@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\BrandsModel;
 
-class ManagementBrandEditRequest extends FormRequest
+class ManagementGoodsTagsCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,7 +19,8 @@ class ManagementBrandEditRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => '标签名不能为空',
+            'name.required' => '请输入标签名',
+            'name.unique' => '标签已存在'
         ];
     }
 
@@ -34,14 +34,7 @@ class ManagementBrandEditRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                function($attribute, $value, $fail) {
-                    $id = $this->route('id');
-                    if (!$id) {
-                        $fail('品牌id不存在');
-                    }
-                    $isEmpty = BrandsModel::where('id', $id)->get()->isEmpty();
-                    $isEmpty && $fail('品牌id不存在');
-                }
+                'unique:goods_tags'
             ]
         ];
     }

@@ -36,8 +36,10 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
         Route::post('management/brands', [\App\Http\Controllers\AdminApi\BrandsController::class, 'create']);
         Route::patch('management/brands/{id}', [\App\Http\Controllers\AdminApi\BrandsController::class, 'edit']);
         Route::get('management/brands', [\App\Http\Controllers\AdminApi\BrandsController::class, 'index']);
+        // 商品标签
+        Route::get('management/goodsTags', [\App\Http\Controllers\AdminApi\GoodstagsController::class, 'index']);
+        Route::post('management/goodsTags', [\App\Http\Controllers\AdminApi\GoodstagsController::class, 'create']);
+        Route::patch('management/goodsTags/{id}', [\App\Http\Controllers\AdminApi\GoodstagsController::class, 'edit']);
     });
 });
-
-
 
