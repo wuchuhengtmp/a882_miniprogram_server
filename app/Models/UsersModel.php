@@ -8,7 +8,29 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class UsersModel extends Authenticatable implements JWTSubject
 {
+   protected $fillable = [
+       'username',
+       'password',
+       'nickname',
+       'phone',
+       'address',
+       'tags',
+       'rate',
+       'start_time',
+       'end_time',
+       'latitude',
+       'longitude'
+   ];
+
     protected $table = 'users';
+
+    public function setTagsAttribute($value = null)
+    {
+        if (is_array($value)) {
+            return json_encode($value);
+        }
+        return $value;
+    }
 
     public function getJWTIdentifier()
     {

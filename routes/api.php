@@ -28,6 +28,8 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
     Route::post('authentications', [\App\Http\Controllers\AdminApi\AuthenticationsController::class, 'create']);
     // 账号信息
     Route::middleware('auth:api')->group(function() {
+        Route::post('users', [\App\Http\Controllers\AdminApi\UsersController::class, 'create']);
+
         Route::get('users/me', [\App\Http\Controllers\AdminApi\UsersController::class, 'show']);
         Route::get('management/categores', [\App\Http\Controllers\AdminApi\CategoresController::class, 'index']);
         Route::post('management/categores', [\App\Http\Controllers\AdminApi\CategoresController::class, 'create']);
@@ -40,6 +42,10 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
         Route::get('management/goodsTags', [\App\Http\Controllers\AdminApi\GoodstagsController::class, 'index']);
         Route::post('management/goodsTags', [\App\Http\Controllers\AdminApi\GoodstagsController::class, 'create']);
         Route::patch('management/goodsTags/{id}', [\App\Http\Controllers\AdminApi\GoodstagsController::class, 'edit']);
+
+        // 上传相册
+        Route::post('albums', [\App\Http\Controllers\AdminApi\AlbumsController::class, 'create']);
     });
+
 });
 

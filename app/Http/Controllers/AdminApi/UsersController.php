@@ -2,11 +2,40 @@
 
 namespace App\Http\Controllers\AdminApi;
 
+use App\Exceptions\InnerErrorException;
 use App\Http\Controllers\Controller;
+use App\Models\AlbumsModel;
+use App\Models\UsersModel;
+use App\Models\UserRolesModel;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Admin\UsersCreateRequest as CreateRequest;
+use App\Models\UserBannersModel;
+use Illuminate\Support\Facades\DB;
+use App\Models\RolesModel;
 
 class UsersController extends Controller
 {
+    private $_UsersModel;
+
+    private $_UserBannerModel;
+
+    private $_UserRoleModel;
+
+    private $_RolesModel;
+
+    public function __construct(
+        UsersModel $usersModel,
+        UserBannersModel $userBannersModel,
+        UserRolesModel $userRolesModel,
+        RolesModel $rolesModel
+    )
+    {
+        $this->_UsersModel = $usersModel;
+        $this->_UserBannerModel = $userBannersModel;
+        $this->_UserRoleModel = $userRolesModel;
+        $this->_RolesModel = $rolesModel;
+    }
+
     public function show()
     {
         $str = '{
@@ -68,4 +97,57 @@ class UsersController extends Controller
         $str['roles'] = $roles;
         return $this->successResponse($str);
     }
+
+    public function create(CreateRequest $request)
+    {
+        $UserModel = $this->_UsersModel;
+        $UserModel->username = $request->input('username');
+        $UserModel->password = $request->input('password');
+        $UserModel->nickname = $request->input('nickname');
+        $UserModel->phone = $request->input('phone');
+        $UserModel->address = $request->input('address');
+        $UserModel->tags = $request->input('tags');
+        $UserModel->rate = $request->input('rate');
+        $UserModel->start_time = $request->input('start_time');
+        $UserModel->end_time = $request->input('end_time');
+        $UserModel->latitude = $request->input('latitude');
+        $UserModel->longitude = $request->input('longitude');
+        try {
+            DB::beginTransaction();
+            if ($UserModel->save()) {
+                //  保存门店图片
+                foreach ($request->input('bannerIds') as $id ) {
+                    $UserBannerModel = new $this->_UserBannerModel;
+                    $UserBannerModel->user_id = $UserModel->id;
+                    $UserBannerModel->album_id = $id;
+                    $UserBannerModel->save();
+                }
+                // 图片恢复
+                AlbumsModel::withTrashed()
+                    ->whereIn('id', $request->input('bannerIds'))
+                    ->restore();
+
+                // 添加角色权限
+                $UserRoleModel = $this->_UserRoleModel;
+                $id = $this->_RolesModel->where('name', 'shop')
+                    ->select('id')
+                    ->first();
+                $roleId = $id->id;
+                $UserRoleModel->user_id = $UserModel->id;
+                $UserRoleModel->role_id = $roleId;
+                $UserRoleModel->save();
+                DB::commit();
+            } else {
+                throw new \Exception('保存失败');
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e->getMessage());
+            throw new InnerErrorException('添加用户失败');
+        }
+        return $this->successResponse([
+            'id' => $UserBannerModel->id
+        ]);
+    }
 }
+

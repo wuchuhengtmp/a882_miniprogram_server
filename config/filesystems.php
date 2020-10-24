@@ -51,7 +51,18 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' =>
+                (function() {
+                    try {
+                        $url = request()->url();
+                        $urlInfo = parse_url($url);
+                        $domain = $urlInfo['scheme'] . '://' . $urlInfo['host'];
+                        return $domain;
+                    } catch (\Exception $e) {
+                        return env('APP_URL');
+                    }
+                })().
+                '/storage',
             'visibility' => 'public',
         ],
 
