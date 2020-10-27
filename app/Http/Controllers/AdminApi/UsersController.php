@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminApi;
 
 use App\Exceptions\InnerErrorException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UserUpdateRequest;
 use App\Models\AlbumsModel;
 use App\Models\UsersModel;
 use App\Models\UserRolesModel;
@@ -12,6 +13,9 @@ use App\Http\Requests\Admin\UsersCreateRequest as CreateRequest;
 use App\Models\UserBannersModel;
 use Illuminate\Support\Facades\DB;
 use App\Models\RolesModel;
+use App\Models\RegionsModel;
+use Illuminate\Support\Facades\Request;
+use App\Http\Requests\Admin\UsersUpdateIsDisableRequest;
 
 class UsersController extends Controller
 {
@@ -23,17 +27,84 @@ class UsersController extends Controller
 
     private $_RolesModel;
 
+    private $_RegionModel;
+
+    private $_Request;
+
     public function __construct(
+        Request $request,
         UsersModel $usersModel,
         UserBannersModel $userBannersModel,
         UserRolesModel $userRolesModel,
-        RolesModel $rolesModel
+        RolesModel $rolesModel,
+        RegionsModel $_RegionModel
     )
     {
+        $this->_Request = $request;
         $this->_UsersModel = $usersModel;
         $this->_UserBannerModel = $userBannersModel;
         $this->_UserRoleModel = $userRolesModel;
         $this->_RolesModel = $rolesModel;
+        $this->_RegionModel = $_RegionModel;
+    }
+
+    public function index()
+    {
+        $result = request()->input('result', 10);
+        $roleName = 'shop';
+        $roleId = $this->_RolesModel
+            ->where('name', $roleName)
+            ->select('id')
+            ->first()
+            ->id;
+        $users = DB::table('users')
+            ->join('user_roles', function($join) use($roleId) {
+                $join->on('user_roles.user_id', '=', 'users.id')
+                    ->where('user_roles.role_id', $roleId);
+            })
+            ->select(
+        'users.id',
+                'users.username',
+                'users.nickname',
+                'users.phone',
+                'users.tags',
+                'users.address',
+                'users.rate',
+                'users.start_time',
+                'users.end_time',
+                'users.latitude',
+                'users.longitude',
+                'users.is_disable',
+                'users.created_at'
+            )
+            ->paginate($result);
+        $items = $users->items();
+        foreach ($items as &$item) {
+            $banners = $this->_UserBannerModel->where('user_id', $item->id)
+                ->get();
+            $bannerUrls = [];
+            foreach ($banners as $banner) {
+                try{
+                    $bannerUrls[] =[
+                        'id' => $banner->album->id,
+                        'url' => $banner->album->url
+                    ];
+                } catch (\Exception $e) {
+                    dd($banner->toArray());
+                }
+            }
+            $item->tags = $item->tags ? json_decode($item->tags, true) : [];
+            $item->start_time = substr($item->start_time, 0, strlen($item->start_time) - 3);
+            $item->end_time = substr($item->end_time, 0, strlen($item->end_time) - 3);
+            $item->banners = $bannerUrls;
+        }
+
+        $returnData = [
+            'items' => $items,
+            'count' => $users->total()
+        ];
+
+        return $this->successResponse($returnData);
     }
 
     public function show()
@@ -106,12 +177,23 @@ class UsersController extends Controller
         $UserModel->nickname = $request->input('nickname');
         $UserModel->phone = $request->input('phone');
         $UserModel->address = $request->input('address');
-        $UserModel->tags = $request->input('tags');
+        $UserModel->tags = json_encode($request->input('tags', []));
         $UserModel->rate = $request->input('rate');
-        $UserModel->start_time = $request->input('start_time');
-        $UserModel->end_time = $request->input('end_time');
+        $UserModel->start_time = $request->input('startTime');
+        $UserModel->end_time = $request->input('endTime');
         $UserModel->latitude = $request->input('latitude');
         $UserModel->longitude = $request->input('longitude');
+        $amapKey = getConfigByKey('AMAP_KEY');
+        $location = $UserModel->longitude . ',' . $UserModel->latitude;
+        $mapInfo = json_decode(file_get_contents("https://restapi.amap.com/v3/geocode/regeo?key={$amapKey}&location={$location}"), true);
+        if ($mapInfo['info'] === 'OK') {
+            $adcode = $mapInfo['regeocode']['addressComponent']['adcode'];
+            $RegionsModel = $this->_RegionModel;
+            if (!$RegionsModel->where('id', $adcode)->first()) throw new InnerErrorException('该地区编码未收录');
+            $UserModel->region_id = $adcode;
+        } else {
+           throw new InnerErrorException('该地址查不到地区编');
+        }
         try {
             DB::beginTransaction();
             if ($UserModel->save()) {
@@ -148,6 +230,83 @@ class UsersController extends Controller
         return $this->successResponse([
             'id' => $UserBannerModel->id
         ]);
+    }
+
+    /**
+     *  修改禁用状态
+     */
+    public function updateIsDisable(UsersUpdateIsDisableRequest $request)
+    {
+        $isDisable = $request->input('isDisable');
+        $id = $request->route('id');
+        $UserModel = $this->_UsersModel;
+        $User = $UserModel->where('id', $id)->first();
+        $User->is_disable = $isDisable ? 1 : 0;
+        if ($User->save()) return $this->successResponse();
+        throw new InnerErrorException();
+    }
+
+    /**
+     * 编辑
+     */
+    public function update(UserUpdateRequest $request)
+    {
+        $userId = $request->route('id');
+        $User = $this->_UsersModel->where('id', $userId)->first();
+        $User->nickname = $request->nickname;
+        $User->phone = $request->input('phone');
+        $User->tags= json_encode(explode(',', $request->input('tags')));
+        $User->address = $request->input('address');
+        $User->latitude = $request->input('latitude');
+        $User->longitude = $request->input('longitude');
+        $User->start_time = $request->input('start_time');
+        $User->rate = $request->input('rate');
+        $User->end_time = $request->input('end_time');
+        $userBannerIds = array_map(
+            function (int $item) {
+               return $item;
+            },
+            explode(',',  $request->input('banners'))
+           );
+
+        $albumIds = $this->_UserBannerModel->where('user_id', $userId)
+            ->select('album_id')
+            ->get()
+            ->pluck('album_id')
+            ->toArray();
+        DB::beginTransaction();
+        try{
+            // 删除多余的banner图
+            $willDeleteIds = array_filter($albumIds, function($item) use ($userBannerIds) {
+                return !in_array($item, $userBannerIds);
+            });
+            if ($willDeleteIds) {
+                $WillDeleteBanners = $this->_UserBannerModel->whereIn('album_id', $willDeleteIds)->get();
+                foreach ($WillDeleteBanners as $UserBanner) {
+                    $UserBanner->album->delete();
+                    $UserBanner->delete();
+                }
+            }
+            // 添加新增加banner图
+            $newAlbumIds = array_filter($userBannerIds, function ($item ) use ($albumIds) {
+                return !in_array($item, $albumIds);
+            });
+            foreach ($newAlbumIds as $newAlbumId) {
+                $UserBanner = new UserBannersModel();
+                $UserBanner->user_id = $userId;
+                $UserBanner->album_id = $newAlbumId;
+                $UserBanner->save();
+                AlbumsModel::withTrashed()
+                    ->where('id', $newAlbumId)
+                    ->restore();
+            }
+            $User->save();
+            DB::commit();
+            return $this->successResponse();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new InnerErrorException();
+        }
     }
 }
 

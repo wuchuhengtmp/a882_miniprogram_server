@@ -19,18 +19,11 @@ class UsersModel extends Authenticatable implements JWTSubject
        'start_time',
        'end_time',
        'latitude',
-       'longitude'
+       'longitude',
+       'region_id'
    ];
 
     protected $table = 'users';
-
-    public function setTagsAttribute($value = null)
-    {
-        if (is_array($value)) {
-            return json_encode($value);
-        }
-        return $value;
-    }
 
     public function getJWTIdentifier()
     {
@@ -56,5 +49,4 @@ class UsersModel extends Authenticatable implements JWTSubject
             'role_id' // 中间表关联目标表的键名
         );
     }
-
 }

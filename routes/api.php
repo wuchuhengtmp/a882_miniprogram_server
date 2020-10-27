@@ -28,7 +28,11 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
     Route::post('authentications', [\App\Http\Controllers\AdminApi\AuthenticationsController::class, 'create']);
     // 账号信息
     Route::middleware('auth:api')->group(function() {
+        // 门店管理
         Route::post('users', [\App\Http\Controllers\AdminApi\UsersController::class, 'create']);
+        Route::get('users', [\App\Http\Controllers\AdminApi\UsersController::class, 'index']);
+        Route::put('users/{id}/isDisable', [\App\Http\Controllers\AdminApi\UsersController::class, 'updateIsDisable']);
+        Route::patch('users/{id}', [\App\Http\Controllers\AdminApi\UsersController::class, 'update']);
 
         Route::get('users/me', [\App\Http\Controllers\AdminApi\UsersController::class, 'show']);
         Route::get('management/categores', [\App\Http\Controllers\AdminApi\CategoresController::class, 'index']);
@@ -45,6 +49,15 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
 
         // 上传相册
         Route::post('albums', [\App\Http\Controllers\AdminApi\AlbumsController::class, 'create']);
+
+        // 配置
+        Route::get('configs', [\App\Http\Controllers\AdminApi\ConfigController::class, 'index']);
+
+        // ip
+        Route::get('ip', [\App\Http\Controllers\AdminApi\IPController::class, 'show']);
+
+        // 删除门店的图片
+        Route::delete('userBanners/{id}', [\App\Http\Controllers\AdminApi\UserBannersController::class, 'destroy']);
     });
 
 });

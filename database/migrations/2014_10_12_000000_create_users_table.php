@@ -31,6 +31,8 @@ class CreateUsersTable extends Migration
             $table->time('end_time')->nullable()->comment('结束时间');
             $table->string('latitude')->nullable()->comment('纬度');
             $table->string('longitude')->nullable()->comment('经度');
+            $table->integer('region_id')->nullable()->comment('地区编号');
+            $table->integer('is_disable')->default(1)->comment('1禁用0开通');
             $table->rememberToken();
             $table->timestamps();
         });

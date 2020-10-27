@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class AlbumsModel extends Model
 {
@@ -15,4 +16,9 @@ class AlbumsModel extends Model
         'path',
         'disk'
     ];
+
+    public function getUrlAttribute($key)
+    {
+        return Storage::disk($this->disk)->url($this->path);
+    }
 }

@@ -12,4 +12,9 @@ class UserBannersModel extends Model
         'user_id',
         'album_id'
     ];
+
+    public function album()
+    {
+        return $this->hasOne(AlbumsModel::class, 'id', 'album_id');
+    }
 }
