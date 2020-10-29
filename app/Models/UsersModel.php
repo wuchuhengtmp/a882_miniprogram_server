@@ -37,6 +37,27 @@ class UsersModel extends Authenticatable implements JWTSubject
         ];
     }
 
+    protected function getTagsAttribute($value)
+    {
+        $tags = json_decode($value, true);
+        if (!$tags) return [];
+        $res =  array_map(function ($item) {
+            return urldecode($item);
+        }, $tags);
+
+        return $res;
+    }
+
+    protected function setTagsAttribute($value)
+    {
+        $value = array_map(function ($item) {
+            return urlencode($item);
+        }, $value);
+
+        $tags = json_encode($value);
+        $this->attributes['tags'] = $tags;
+    }
+
     // 角色
     public function roles()
     {

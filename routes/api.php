@@ -33,6 +33,7 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
         Route::get('users', [\App\Http\Controllers\AdminApi\UsersController::class, 'index']);
         Route::put('users/{id}/isDisable', [\App\Http\Controllers\AdminApi\UsersController::class, 'updateIsDisable']);
         Route::patch('users/{id}', [\App\Http\Controllers\AdminApi\UsersController::class, 'update']);
+        Route::get('users/shopNames', [\App\Http\Controllers\AdminApi\UsersController::class, 'showShopName']);
 
         Route::get('users/me', [\App\Http\Controllers\AdminApi\UsersController::class, 'show']);
         Route::get('management/categores', [\App\Http\Controllers\AdminApi\CategoresController::class, 'index']);
@@ -58,6 +59,15 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
 
         // 删除门店的图片
         Route::delete('userBanners/{id}', [\App\Http\Controllers\AdminApi\UserBannersController::class, 'destroy']);
+
+        // 添加商品
+        Route::post('goods', [\App\Http\Controllers\AdminApi\GoodsController::class, 'created']);
+        // 商品列表
+        Route::get('goods', [\App\Http\Controllers\AdminApi\GoodsController::class, 'index']);
+        // 上下架状态
+        Route::get('goods/status', [\App\Http\Controllers\AdminApi\GoodsController::class, 'showStatus'])->middleware([
+            \App\Http\Middleware\CheckAdminOrShopAuthMiddleware::class
+        ]);
     });
 
 });

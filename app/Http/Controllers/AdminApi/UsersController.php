@@ -51,13 +51,8 @@ class UsersController extends Controller
     public function index()
     {
         $result = request()->input('result', 10);
-        $roleName = 'shop';
-        $roleId = $this->_RolesModel
-            ->where('name', $roleName)
-            ->select('id')
-            ->first()
-            ->id;
-        $users = DB::table('users')
+        $roleId = $this->_RolesModel->getIdByName('shop');
+        $users = (new UsersModel())
             ->join('user_roles', function($join) use($roleId) {
                 $join->on('user_roles.user_id', '=', 'users.id')
                     ->where('user_roles.role_id', $roleId);
@@ -79,7 +74,7 @@ class UsersController extends Controller
             )
             ->paginate($result);
         $items = $users->items();
-        foreach ($items as &$item) {
+        foreach ($items as $key => &$item) {
             $banners = $this->_UserBannerModel->where('user_id', $item->id)
                 ->get();
             $bannerUrls = [];
@@ -93,10 +88,12 @@ class UsersController extends Controller
                     dd($banner->toArray());
                 }
             }
-            $item->tags = $item->tags ? json_decode($item->tags, true) : [];
             $item->start_time = substr($item->start_time, 0, strlen($item->start_time) - 3);
             $item->end_time = substr($item->end_time, 0, strlen($item->end_time) - 3);
             $item->banners = $bannerUrls;
+            $created_at = $item->created_at->format('Y-m-d H:i');
+            $item = $item->toArray();
+            $items[$key]['created_at'] = $created_at;
         }
 
         $returnData = [
@@ -177,7 +174,7 @@ class UsersController extends Controller
         $UserModel->nickname = $request->input('nickname');
         $UserModel->phone = $request->input('phone');
         $UserModel->address = $request->input('address');
-        $UserModel->tags = json_encode($request->input('tags', []));
+        $UserModel->tags = $request->input('tags', []);
         $UserModel->rate = $request->input('rate');
         $UserModel->start_time = $request->input('startTime');
         $UserModel->end_time = $request->input('endTime');
@@ -255,7 +252,7 @@ class UsersController extends Controller
         $User = $this->_UsersModel->where('id', $userId)->first();
         $User->nickname = $request->nickname;
         $User->phone = $request->input('phone');
-        $User->tags= json_encode(explode(',', $request->input('tags')));
+        $User->tags= explode(',', $request->input('tags'));
         $User->address = $request->input('address');
         $User->latitude = $request->input('latitude');
         $User->longitude = $request->input('longitude');
@@ -308,5 +305,21 @@ class UsersController extends Controller
             throw new InnerErrorException();
         }
     }
+
+    /**
+     * 展博所有店铺名称
+     */
+     public function showShopName()
+     {
+         $roleId = $this->_RolesModel->getIdByName('shop');
+         $users = $this->_UsersModel
+             ->join('user_roles', function($join) use($roleId) {
+                 $join->on('user_roles.user_id', '=', 'users.id')
+                     ->where('user_roles.role_id', $roleId);
+             })
+             ->select('users.id', 'users.nickname')
+             ->get();
+         return $this->successResponse($users->toArray());
+     }
 }
 
