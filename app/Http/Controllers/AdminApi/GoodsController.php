@@ -73,8 +73,15 @@ class GoodsController extends Controller
             ->where('user_id', Auth::user()->id);
         }
 
-        $Page = $GoodsModel
-            ->paginate($pageCount);
+        $Page = $GoodsModel;
+        if (request()->has('name'))  $Page = $Page->where('name', 'like', "%" . request()->input('name') . "%");
+        if (request()->has('status'))  {
+            switch (request()->input('status')) {
+                case 'true' : $Page = $Page->where('status', 1); break;
+                case 'false' : $Page = $Page->where('status', 0); break;
+            }
+        }
+        $Page = $Page->paginate($pageCount);
         $items = $Page->items();
         foreach ($items as &$item) {
             $item->makeHidden([
