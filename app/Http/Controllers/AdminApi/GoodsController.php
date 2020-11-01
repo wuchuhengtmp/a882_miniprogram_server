@@ -6,7 +6,10 @@ use App\Exceptions\InnerErrorException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\GoodsCreateRequest as CreateRequest;
 use App\Http\Requests\Admin\GoodsShowStatusRequest;
+use App\Http\Requests\Admin\GoodsUpdateRequest;
+use App\Http\Requests\Admin\GoodsUpdateStatusRequest;
 use App\Http\Services\AuthService;
+use App\Models\AlbumsModel;
 use App\Models\GoodsModel;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Services\GoodsService;
@@ -130,5 +133,45 @@ class GoodsController extends Controller
             'onLineTotal' => $onLineTotal,
             'offLineTotal' => $offLineTotal
         ]);
+    }
+
+    /**
+     * 编辑
+     * @param GoodsUpdateRequest $request
+     */
+    public function update(GoodsUpdateRequest $request)
+    {
+        $goodsId = $request->route('id');
+        $requestParams = $request->validated();
+        $Goods = GoodsModel::where('id', $goodsId)->first();
+        $oldBannerId = $Goods->banner_id;
+        $Goods->banner_id = $requestParams['banner_id'];
+        $Goods->base_cost = $requestParams['base_cost'];
+        $Goods->brand_id = $requestParams['brand_id'];
+        $Goods->category_id = $requestParams['category_id'];
+        $Goods->cost = $requestParams['cost'];
+        $Goods->insurance_cost = $requestParams['insurance_cost'];
+        $Goods->name = $requestParams['name'];
+        $Goods->pledge_cost = $requestParams['pledge_cost'];
+        $Goods->service_cost = $requestParams['service_cost'];
+        $Goods->total = $requestParams['total'];
+        $Goods->tag_ids = explode(',',$requestParams['tag_ids']);
+        AlbumsModel::where('id', $oldBannerId)->delete();
+        // 恢复图片
+        AlbumsModel::withTrashed()
+            ->where('id', $requestParams['banner_id'])->restore();
+        if ($Goods->save()) return $this->successResponse();
+        throw new InnerErrorException();
+    }
+
+    /**
+     *  更新状态
+     */
+    public function updateStatus(GoodsUpdateStatusRequest $request)
+    {
+        $Goods = GoodsModel::where('id', $request->route('id'))->first();
+        $Goods->status = $request->input('status');
+        if ($Goods->save()) return $this->successResponse();
+        throw new InnerErrorException();
     }
 }

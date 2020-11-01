@@ -62,6 +62,12 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
 
         // 添加商品
         Route::post('goods', [\App\Http\Controllers\AdminApi\GoodsController::class, 'created']);
+        // 更新商品状态
+        Route::put('goods/{id}/status', [\App\Http\Controllers\AdminApi\GoodsController::class, 'updateStatus']);
+        // 编辑商品
+        Route::put('goods/{id}', [\App\Http\Controllers\AdminApi\GoodsController::class, 'update'])->middleware([
+            \App\Http\Middleware\CheckAdminOrShopAuthMiddleware::class
+        ]);
         // 商品列表
         Route::get('goods', [\App\Http\Controllers\AdminApi\GoodsController::class, 'index']);
         // 上下架状态
