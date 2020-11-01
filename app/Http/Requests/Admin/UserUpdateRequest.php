@@ -39,10 +39,12 @@ class UserUpdateRequest extends FormRequest
             'longitude' => [ 'required' ],
             'start_time' => [ 'required' ],
             'end_time' => [ 'required' ],
-//            'tags' => [ 'required' ],
             'banners' => [ 'required' ],
             'password' => [
-                'digits_between:8,20'
+                function($attr, $value, $fail) {
+                    $length = 8;
+                    if (strlen($value) < $length ) return $fail("密码长度不能小于{$length}位");
+                }
             ]
         ];
     }

@@ -14,8 +14,10 @@ use App\Models\UserBannersModel;
 use Illuminate\Support\Facades\DB;
 use App\Models\RolesModel;
 use App\Models\RegionsModel;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
 use App\Http\Requests\Admin\UsersUpdateIsDisableRequest;
+use Lcobucci\JWT\Signer\Hmac;
 
 class UsersController extends Controller
 {
@@ -170,7 +172,7 @@ class UsersController extends Controller
     {
         $UserModel = $this->_UsersModel;
         $UserModel->username = $request->input('username');
-        $UserModel->password = $request->input('password');
+        $UserModel->password = Hash::make($request->input('password'));
         $UserModel->nickname = $request->input('nickname');
         $UserModel->phone = $request->input('phone');
         $UserModel->address = $request->input('address');
@@ -251,6 +253,7 @@ class UsersController extends Controller
         $userId = $request->route('id');
         $User = $this->_UsersModel->where('id', $userId)->first();
         $User->nickname = $request->nickname;
+        if ($request->has('password')) $User->password= Hash::make($request->input('password'));
         $User->phone = $request->input('phone');
         $User->tags= explode(',', $request->input('tags'));
         $User->address = $request->input('address');

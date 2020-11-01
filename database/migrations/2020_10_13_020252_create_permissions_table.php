@@ -16,9 +16,11 @@ class CreatePermissionsTable extends Migration
     {
         Schema::create($this->table_name, function (Blueprint $table) {
             $table->id();
-            $table->string('name')->comment('权限名');
-            $table->string('method')->comment('请求方式');
-            $table->string('route')->comment('请求路由');
+            $table->string('controller')->comment('控制器');
+            $table->string('method')->comment('方法名');
+            $table->string('note')
+                ->default()
+                ->comment('备注');
             $table->timestamps();
         });
     }
