@@ -80,6 +80,10 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
         Route::get('goods/status', [\App\Http\Controllers\AdminApi\GoodsController::class, 'showStatus'])->middleware([
             \App\Http\Middleware\CheckAdminOrShopAuthMiddleware::class
         ]);
+        // 添加幻灯片
+        Route::post('slides', [\App\Http\Controllers\AdminApi\SlidesController::class, 'create']);
+        // 获取幻灯片
+        Route::get('slides', [\App\Http\Controllers\AdminApi\SlidesController::class, 'index']);
     });
 
 });

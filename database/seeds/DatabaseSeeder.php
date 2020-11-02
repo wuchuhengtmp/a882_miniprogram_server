@@ -80,6 +80,8 @@ class DatabaseSeeder extends Seeder
             ('23', 'App_Http_Controllers_AdminApi_GoodsController', 'index', '获取车子列表', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
             ('24', 'App_Http_Controllers_AdminApi_GoodsController', 'showStatus', '修改车子上下架状态', '2020-11-01 16:02:18', '2020-11-01 16:02:18');
 ");
+        DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'25\', \'App_Http_Controllers_AdminApi_SlidesController\', \'create\', \'添加幻灯片\', NULL, NULL);');
+        DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'26\', \'App_Http_Controllers_AdminApi_SlidesController\', \'index\', \'获取幻灯片\', NULL, NULL);');
 
         // 角色权限
         DB::insert('INSERT INTO `role_permissions` (`role_id`, `permission_id`, `created_at`, `updated_at`) VALUES
