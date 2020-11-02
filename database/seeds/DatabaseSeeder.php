@@ -54,35 +54,52 @@ class DatabaseSeeder extends Seeder
 
         // 权限表
 
-        DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES
-            (\'1\', \'App\\Http\\Controllers\\AdminApi\\UsersController\', \'create\', \'创建门店\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'2\', \'App\\Http\\Controllers\\AdminApi\\UsersController\', \'index\', \'门店列表\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'3\', \'App\\Http\\Controllers\\AdminApi\\UsersController\', \'updateIsDisable\', \'修改门店状态\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'4\', \'App\\Http\\Controllers\\AdminApi\\UsersController\', \'update\', \'修改门店\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'5\', \'App\\Http\\Controllers\\AdminApi\\UsersController\', \'showShopName\', \'获取门店名列表\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'6\', \'App\\Http\\Controllers\\AdminApi\\UsersController\', \'show\', \'获取当前登录信息\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'7\', \'App\\Http\\Controllers\\AdminApi\\CategoresController\', \'index\', \'获取车型列表\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'8\', \'App\\Http\\Controllers\\AdminApi\\CategoresController\', \'create\', \'添加车型\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'9\', \'App\\Http\\Controllers\\AdminApi\\CategoresController\', \'update\', \'更新车型\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'10\', \'App\\Http\\Controllers\\AdminApi\\BrandsController\', \'create\', \'添加品牌\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'11\', \'App\\Http\\Controllers\\AdminApi\\BrandsController\', \'edit\', \'修改品牌\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'12\', \'App\\Http\\Controllers\\AdminApi\\BrandsController\', \'index\', \'获取品牌列表\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'13\', \'App\\Http\\Controllers\\AdminApi\\GoodstagsController\', \'index\', \'获取商品标签列表\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'14\', \'App\\Http\\Controllers\\AdminApi\\GoodstagsController\', \'create\', \'添加商品标签\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'15\', \'App\\Http\\Controllers\\AdminApi\\GoodstagsController\', \'edit\', \'修改商品标签\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'16\', \'App\\Http\\Controllers\\AdminApi\\AlbumsController\', \'create\', \'上传图片\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'17\', \'App\\Http\\Controllers\\AdminApi\\ConfigController\', \'index\', \'获取配置\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'18\', \'App\\Http\\Controllers\\AdminApi\\IPController\', \'show\', \'获取公网ip\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'19\', \'App\\Http\\Controllers\\AdminApi\\UserBannersController\', \'destroy\', \'删除门店的图片\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'20\', \'App\\Http\\Controllers\\AdminApi\\GoodsController\', \'created\', \'添加车子\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'21\', \'App\\Http\\Controllers\\AdminApi\\GoodsController\', \'updateStatus\', \'更新车子上下架状态\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'22\', \'App\\Http\\Controllers\\AdminApi\\GoodsController\', \'update\', \'编辑车子\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'23\', \'App\\Http\\Controllers\\AdminApi\\GoodsController\', \'index\', \'获取车子列表\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\'),
-            (\'24\', \'App\\Http\\Controllers\\AdminApi\\GoodsController\', \'showStatus\', \'修改车子上下架状态\', \'2020-11-01 16:02:18\', \'2020-11-01 16:02:18\');
-');
+        DB::insert("INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES
+        ('1', 'App_Http_Controllers_AdminApi_UsersController', 'create', '创建门店', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('2', 'App_Http_Controllers_AdminApi_UsersController', 'index', '门店列表', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('3', 'App_Http_Controllers_AdminApi_UsersController', 'updateIsDisable', '修改门店状态', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('4', 'App_Http_Controllers_AdminApi_UsersController', 'update', '修改门店', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('5', 'App_Http_Controllers_AdminApi_UsersController', 'showShopName', '获取门店名列表', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('6', 'App_Http_Controllers_AdminApi_UsersController', 'show', '获取当前登录信息', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('7', 'App_Http_Controllers_AdminApi_CategoresController', 'index', '获取车型列表', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('8', 'App_Http_Controllers_AdminApi_CategoresController', 'create', '添加车型', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('9', 'App_Http_Controllers_AdminApi_CategoresController', 'update', '更新车型', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('10', 'App_Http_Controllers_AdminApi_BrandsController', 'create', '添加品牌', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('11', 'App_Http_Controllers_AdminApi_BrandsController', 'edit', '修改品牌', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('12', 'App_Http_Controllers_AdminApi_BrandsController', 'index', '获取品牌列表', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('13', 'App_Http_Controllers_AdminApi_GoodstagsController', 'index', '获取商品标签列表', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('14', 'App_Http_Controllers_AdminApi_GoodstagsController', 'create', '添加商品标签', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('15', 'App_Http_Controllers_AdminApi_GoodstagsController', 'edit', '修改商品标签', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('16', 'App_Http_Controllers_AdminApi_AlbumsController', 'create', '上传图片', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('17', 'App_Http_Controllers_AdminApi_ConfigController', 'index', '获取配置', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('18', 'App_Http_Controllers_AdminApi_IPController', 'show', '获取公网ip', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('19', 'App_Http_Controllers_AdminApi_UserBannersController', 'destroy', '删除门店的图片', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('20', 'App_Http_Controllers_AdminApi_GoodsController', 'created', '添加车子', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('21', 'App_Http_Controllers_AdminApi_GoodsController', 'updateStatus', '更新车子上下架状态', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('22', 'App_Http_Controllers_AdminApi_GoodsController', 'update', '编辑车子', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('23', 'App_Http_Controllers_AdminApi_GoodsController', 'index', '获取车子列表', '2020-11-01 16:02:18', '2020-11-01 16:02:18'),
+            ('24', 'App_Http_Controllers_AdminApi_GoodsController', 'showStatus', '修改车子上下架状态', '2020-11-01 16:02:18', '2020-11-01 16:02:18');
+");
 
-
-
+        // 角色权限
+        DB::insert('INSERT INTO `role_permissions` (`role_id`, `permission_id`, `created_at`, `updated_at`) VALUES
+            (\'2\', \'3\', NULL, NULL),
+            (\'2\', \'4\', NULL, NULL),
+            (\'2\', \'5\', NULL, NULL),
+            (\'2\', \'6\', NULL, NULL),
+            (\'2\', \'7\', NULL, NULL),
+            (\'2\', \'12\', NULL, NULL),
+            (\'2\', \'13\', NULL, NULL),
+            (\'2\', \'16\', NULL, NULL),
+            (\'2\', \'17\', NULL, NULL),
+            (\'2\', \'18\', NULL, NULL),
+            (\'2\', \'19\', NULL, NULL),
+            (\'2\', \'20\', NULL, NULL),
+            (\'2\', \'21\', NULL, NULL),
+            (\'2\', \'22\', NULL, NULL),
+            (\'2\', \'23\', NULL, NULL),
+            (\'2\', \'24\', NULL, NULL)'
+        );
 
 
     }

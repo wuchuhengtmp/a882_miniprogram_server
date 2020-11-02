@@ -13,4 +13,9 @@ class AuthService
         $hasRole = Auth::user()->roles()->where('name', $role)->first();
         return $hasRole ? true : false;
     }
+
+    public function getPermissionByRoleId($id)
+    {
+
+    }
 }

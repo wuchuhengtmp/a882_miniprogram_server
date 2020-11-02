@@ -26,4 +26,19 @@ class RolesModel extends Model
             return null;
         }
     }
+
+    /**
+     * 获取权限
+     */
+    public function permissions()
+    {
+        return $this->hasManyThrough(
+            RolesModel::class,
+            RolePermissionsModels::class,
+            'role_id', // 用户表外键->存在中间表中
+            'id', // 目标表键名
+            'id', //  本地表键名
+            'permission_id' // 中间表关联目标表的键名
+        );
+    }
 }

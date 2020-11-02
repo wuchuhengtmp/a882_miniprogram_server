@@ -79,11 +79,15 @@ class Handler extends ExceptionHandler
             ]);
         } else if ($exception instanceof BaseException){
             // 业务处理产生的异常
-            return response([
+            $res = [
                 'success' => false,
                 'errorCode' => $exception->getCode(),
                 'errorMessage' => $exception->getMessage()
-            ]);
+            ];
+            if ( $exception->_showType > 0 ) {
+                $res['showType'] = $exception->_showType;
+            }
+            return response($res);
         }
         return parent::render($request, $exception);
     }
