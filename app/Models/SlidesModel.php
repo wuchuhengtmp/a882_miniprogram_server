@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Requests\Admin\SlidesDeleteRequest;
 use Illuminate\Database\Eloquent\Model;
 
 class SlidesModel extends Model

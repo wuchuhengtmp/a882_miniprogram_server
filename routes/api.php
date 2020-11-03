@@ -86,7 +86,7 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
         Route::get('slides', [\App\Http\Controllers\AdminApi\SlidesController::class, 'index']);
         // 删除幻灯片
         Route::delete('slides/{id}', [\App\Http\Controllers\AdminApi\SlidesController::class, 'destroy']);
+        // 更新幻灯片
+        Route::patch('slides/{id}', [\App\Http\Controllers\AdminApi\SlidesController::class, 'update']);
     });
-
 });
-

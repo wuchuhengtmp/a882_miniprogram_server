@@ -83,6 +83,9 @@ class DatabaseSeeder extends Seeder
         DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'25\', \'App_Http_Controllers_AdminApi_SlidesController\', \'create\', \'添加幻灯片\', NULL, NULL);');
         DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'26\', \'App_Http_Controllers_AdminApi_SlidesController\', \'index\', \'获取幻灯片\', NULL, NULL);');
         DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'27\', \'App_Http_Controllers_AdminApi_SlidesController\', \'destroy\', \'删除幻灯片\', NULL, NULL);');
+        DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'28\', \'App_Http_Controllers_AdminApi_SlidesController\', \'update\', \'更新幻灯片\', NULL, NULL);');
+
+
 
         // 角色权限
         DB::insert('INSERT INTO `role_permissions` (`role_id`, `permission_id`, `created_at`, `updated_at`) VALUES
@@ -104,6 +107,15 @@ class DatabaseSeeder extends Seeder
             (\'2\', \'24\', NULL, NULL)'
         );
 
-
+        // 轮播图
+        DB::insert('INSERT INTO `slides` (`id`, `slide_id`, `detail_id`, `created_at`, `updated_at`) VALUES (\'1\', \'4\', \'3\', \'2020-11-03 15:51:52\', \'2020-11-03 15:51:52\');');
+        DB::insert('INSERT INTO `slides` (`id`, `slide_id`, `detail_id`, `created_at`, `updated_at`) VALUES (\'2\', \'6\', \'5\', \'2020-11-03 15:52:01\', \'2020-11-03 15:52:01\');');
+        DB::insert('INSERT INTO `slides` (`id`, `slide_id`, `detail_id`, `created_at`, `updated_at`) VALUES (\'3\', \'8\', \'7\', \'2020-11-03 15:52:13\', \'2020-11-03 15:52:13\');');
+        DB::insert('INSERT INTO `albums` (`id`, `path`, `disk`, `deleted_at`, `created_at`, `updated_at`) VALUES (\'3\', \'ydHk6sOOgAq2UIeync9R855dNhHMBz6saCguupmz.jpeg\', \'public\', NULL, \'2020-11-03 15:51:48\', \'2020-11-03 15:51:52\');');
+        DB::insert('INSERT INTO `albums` (`id`, `path`, `disk`, `deleted_at`, `created_at`, `updated_at`) VALUES (\'4\', \'C1OIPNCbMMfUuSUdkxy0PVt9QsJtP4tpLYAIpwJ9.jpeg\', \'public\', NULL, \'2020-11-03 15:51:51\', \'2020-11-03 15:51:52\');');
+        DB::insert('INSERT INTO `albums` (`id`, `path`, `disk`, `deleted_at`, `created_at`, `updated_at`) VALUES (\'5\', \'eKdB6rdqrQwoNd3s2zwRwiuK7xxgMcajVu2wqRMK.jpeg\', \'public\', NULL, \'2020-11-03 15:51:58\', \'2020-11-03 15:52:01\');');
+        DB::insert('INSERT INTO `albums` (`id`, `path`, `disk`, `deleted_at`, `created_at`, `updated_at`) VALUES (\'6\', \'9BtThCV4pbsxYzbihiDRV0A4HpTSPOGhqMWFJHsu.jpeg\', \'public\', NULL, \'2020-11-03 15:52:00\', \'2020-11-03 15:52:01\');');
+        DB::insert('INSERT INTO `albums` (`id`, `path`, `disk`, `deleted_at`, `created_at`, `updated_at`) VALUES (\'7\', \'sKmzMpXlxHMJbiUFTtsipk9rnJOBtx9DNHjHxhrP.jpeg\', \'public\', NULL, \'2020-11-03 15:52:08\', \'2020-11-03 15:52:13\');');
+        DB::insert('INSERT INTO `albums` (`id`, `path`, `disk`, `deleted_at`, `created_at`, `updated_at`) VALUES (\'8\', \'lgkLrJd3f2icRlYYwVLxz86VbLElF8NiY1iduNQJ.jpeg\', \'public\', NULL, \'2020-11-03 15:52:11\', \'2020-11-03 15:52:13\');');
     }
 }

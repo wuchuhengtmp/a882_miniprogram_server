@@ -5,10 +5,12 @@ namespace App\Http\Controllers\AdminApi;
 use App\Exceptions\InnerErrorException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SlidesDeleteRequest;
+use App\Http\Requests\Admin\SlideUpdateRequest;
 use App\Models\AlbumsModel;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\SlideCreateRequest;
 use App\Models\SlidesModel;
+use Illuminate\Support\Facades\DB;
 
 class SlidesController extends Controller
 {
@@ -52,5 +54,32 @@ class SlidesController extends Controller
     {
         if ($slidesModel->destroyById($id)) return $this->successResponse();
         throw new InnerErrorException();
+    }
+
+
+    /**
+     * @return bool|void
+     */
+    public function update($id, SlidesModel $slidesModel,SlideUpdateRequest $request)
+    {
+        $Slide = $slidesModel->where('id', $id)->first();
+        $oldSlideId = $Slide->slide_id;
+        $oldDetailId = $Slide->detail_id;
+        $slideId = $request->input('slide_id');
+        $detailId = $request->input('detail_id');
+        $Slide->slide_id = $slideId;
+        $Slide->detail_id = $detailId;
+        DB::beginTransaction();
+        try{
+           $Slide->save();
+            AlbumsModel::whereIn('id', [$oldDetailId,$oldSlideId])->delete();
+            AlbumsModel::withTrashed()->whereIn('id', [$slideId, $detailId])->restore();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $e->getMessage();
+            throw new InnerErrorException($e->getMessage(), 40002, 4);
+        }
+        return $this->successResponse();
     }
 }
