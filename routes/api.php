@@ -88,5 +88,11 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
         Route::delete('slides/{id}', [\App\Http\Controllers\AdminApi\SlidesController::class, 'destroy']);
         // 更新幻灯片
         Route::patch('slides/{id}', [\App\Http\Controllers\AdminApi\SlidesController::class, 'update']);
+
+        // 文章列表
+        Route::get('clauses', [\App\Http\Controllers\AdminApi\ClausesController::class, 'index']);
+        // 修改
+        Route::post('clauses/{id}', [\App\Http\Controllers\AdminApi\ClausesController::class, 'update']);
     });
 });
+

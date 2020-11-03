@@ -84,8 +84,8 @@ class DatabaseSeeder extends Seeder
         DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'26\', \'App_Http_Controllers_AdminApi_SlidesController\', \'index\', \'获取幻灯片\', NULL, NULL);');
         DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'27\', \'App_Http_Controllers_AdminApi_SlidesController\', \'destroy\', \'删除幻灯片\', NULL, NULL);');
         DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'28\', \'App_Http_Controllers_AdminApi_SlidesController\', \'update\', \'更新幻灯片\', NULL, NULL);');
-
-
+        DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'29\', \'App_Http_Controllers_AdminApi_ClausesController\', \'index\', \'获取列表\', NULL, NULL);');
+        DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'30\', \'App_Http_Controllers_AdminApi_ClausesController\', \'update\', \'修改条款\', NULL, NULL);');
 
         // 角色权限
         DB::insert('INSERT INTO `role_permissions` (`role_id`, `permission_id`, `created_at`, `updated_at`) VALUES
