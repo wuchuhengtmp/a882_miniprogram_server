@@ -37,4 +37,15 @@ class SlidesModel extends Model
             'url' => $Album->url
         ];
     }
+
+    public function destroyById($id)
+    {
+        $Slide = $this->where('id', $id)->first();
+        $slideId = $Slide->slide_id;
+        $detailId = $Slide->detail_id;
+        AlbumsModel::where('id', $slideId)->delete();
+        AlbumsModel::where('id', $detailId)->delete();
+        $Slide->delete();
+        return true;
+    }
 }

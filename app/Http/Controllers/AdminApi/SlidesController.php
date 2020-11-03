@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminApi;
 
 use App\Exceptions\InnerErrorException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\SlidesDeleteRequest;
 use App\Models\AlbumsModel;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\SlideCreateRequest;
@@ -45,5 +46,11 @@ class SlidesController extends Controller
             'items' => $Items,
             'total' => $Page->total()
         ]);
+    }
+
+    public function destroy($id, SlidesModel $slidesModel, SlidesDeleteRequest $request)
+    {
+        if ($slidesModel->destroyById($id)) return $this->successResponse();
+        throw new InnerErrorException();
     }
 }
