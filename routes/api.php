@@ -93,6 +93,15 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
         Route::get('clauses', [\App\Http\Controllers\AdminApi\ClausesController::class, 'index']);
         // 修改
         Route::post('clauses/{id}', [\App\Http\Controllers\AdminApi\ClausesController::class, 'update']);
+
+        // 常见问题列表
+        Route::get('fq', [\App\Http\Controllers\AdminApi\FqController::class, 'index']);
+        Route::post('fq', [\App\Http\Controllers\AdminApi\FqController::class, 'create']);
+        Route::delete('fq/{id}', [\App\Http\Controllers\AdminApi\FqController::class, 'destroy']);
+        //更新常见问题
+        Route::patch('fq/{id}', [\App\Http\Controllers\AdminApi\FqController::class, 'update']);
     });
 });
+
+
 
