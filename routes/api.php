@@ -60,8 +60,14 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
         Route::patch('management/goodsTags/{id}', [\App\Http\Controllers\AdminApi\GoodstagsController::class, 'edit']);
         // 上传图片
         Route::post('albums', [\App\Http\Controllers\AdminApi\AlbumsController::class, 'create']);
+
         // 获取配置
         Route::get('configs', [\App\Http\Controllers\AdminApi\ConfigController::class, 'index']);
+        // 获取单个配置
+        Route::get('configs/{key}', [\App\Http\Controllers\AdminApi\ConfigController::class, 'show']);
+        // 修改单个配置
+        Route::patch('configs/{key}', [\App\Http\Controllers\AdminApi\ConfigController::class, 'update']);
+
         // 获取公网ip
         Route::get('ip', [\App\Http\Controllers\AdminApi\IPController::class, 'show']);
         // 删除门店的图片
@@ -101,7 +107,8 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
         //更新常见问题
         Route::patch('fq/{id}', [\App\Http\Controllers\AdminApi\FqController::class, 'update']);
     });
+    // 获取基本信息
+    Route::get('bases', [\App\Http\Controllers\AdminApi\BasesController::class, 'index']);
 });
-
 
 
