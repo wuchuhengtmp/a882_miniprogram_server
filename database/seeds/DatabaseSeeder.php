@@ -42,7 +42,6 @@ class DatabaseSeeder extends Seeder
 
         // 配置表
         DB::insert('INSERT INTO `configs` (`id`, `name`, `value`, `note`, `created_at`, `updated_at`) VALUES (\'1\', \'AMAP_KEY\', \'b9ec8422cefaed1483796733ed761921\', NULL, NULL, NULL)');
-        DB::insert('INSERT INTO `configs` (`id`, `name`, `value`, `note`, `created_at`, `updated_at`) VALUES (\'2\', \'BACK_LOGO\', \'9\', NULL, NULL, NULL);');
 
 
         DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'35\', \'App_Http_Controllers_AdminApi_ConfigController\', \'show\', \'获取单个配置\', NULL, NULL);');
@@ -146,6 +145,9 @@ class DatabaseSeeder extends Seeder
         DB::insert(' INSERT INTO `fq` (`id`, `title`, `content`, `order_no`, `created_at`, `updated_at`) VALUES (\'15\', \'退款说明\', \'<p style=\"text-align:start;\" size=\"0\" _root=\"undefined\" __ownerID=\"undefined\" __hash=\"undefined\" __altered=\"false\"><strong>押金退款退款</strong><br/></p><p style=\"text-align:start;\" size=\"0\" _root=\"undefined\" __ownerID=\"undefined\" __hash=\"undefined\" __altered=\"false\">①车辆押金交车前完成支付即可，确认结算后返还； </p><p style=\"text-align:start;\" size=\"0\" _root=\"undefined\" __ownerID=\"undefined\" __hash=\"undefined\" __altered=\"false\">②违章押金还车时完成支付，还车后待确认无违章记录，30-45天内返还，部分城市有延期。</p>\', \'6\', \'2020-11-04 15:49:33\', \'2020-11-04 20:40:06\'); ');
 
         // 网站设置
-        DB::insert('INSERT INTO `albums` (`id`, `path`, `disk`, `deleted_at`, `created_at`, `updated_at`) VALUES (\'9\', \'a2s371v3m16Xb1sJHm6Kv99BvLOWxaadaXH3Il7M.jpeg\', \'public\', NULL, \'2020-11-05 08:30:07\', \'2020-11-05 08:48:44\');');
+        DB::insert('INSERT INTO `albums` (`id`, `path`, `disk`, `deleted_at`, `created_at`, `updated_at`) VALUES (\'10\', \'WwV29kYVny2wLHL5VsDBTQASyoM3udfpTCgkY0au.jpeg\', \'public\', NULL, \'2020-11-05 11:13:54\', \'2020-11-05 11:13:54\');');
+        DB::insert('INSERT INTO `configs` (`id`, `name`, `value`, `note`, `created_at`, `updated_at`) VALUES (\'2\', \'BACK_LOGO\', \'10\', NULL, NULL, NULL);');
+        DB::insert('INSERT INTO `configs` (`id`, `name`, `value`, `note`, `created_at`, `updated_at`) VALUES (\'3\', \'APP_NAME\', \'鑫旺达租车go\', NULL, NULL, NULL);');
+
     }
 }

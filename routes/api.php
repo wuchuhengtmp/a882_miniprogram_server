@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 // 微信小程序接口
 Route::prefix('wechat')->name('api.wechat.')->group(function() {
     Route::post('authentications', [\App\Http\Controllers\Api\Authontication::class, 'create']);
+    // 获取公开信息
+    Route::get('bases', [\App\Http\Controllers\Api\BasesController::class, 'index']);
+    // 获取幻灯片
+    Route::get('slides', [\App\Http\Controllers\Api\SlidesController::class, 'index']);
 });
 
 // 后台接口
