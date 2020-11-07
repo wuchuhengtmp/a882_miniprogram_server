@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use phpDocumentor\Reflection\Types\Boolean;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -69,5 +70,28 @@ class UsersModel extends Authenticatable implements JWTSubject
             'id', //  本地名键名
             'role_id' // 中间表关联目标表的键名
         );
+    }
+
+    public function region()
+    {
+        return $this->hasOne(RegionsModel::class, 'id', 'region_id');
+    }
+
+    /**
+     * 门店图片
+     * @param $key
+     */
+    public function getBannersAttribute(): array
+    {
+        $returnData = [];
+        $id = $this->id;
+        $UserBanners = UserBannersModel::where('user_id', $id)->get();
+        foreach ($UserBanners as $UserBanner) {
+            $item = [];
+            $item['id'] = $UserBanner->album->id;
+            $item['url'] =$UserBanner->album->url;
+            $returnData[] = $item;
+        }
+        return $returnData;
     }
 }

@@ -24,6 +24,14 @@ Route::prefix('wechat')->name('api.wechat.')->group(function() {
     Route::get('bases', [\App\Http\Controllers\Api\BasesController::class, 'index']);
     // 获取幻灯片
     Route::get('slides', [\App\Http\Controllers\Api\SlidesController::class, 'index']);
+    // 获取配置
+    Route::get('configs/{key}', [\App\Http\Controllers\Api\ConfigsController::class, 'show']);
+    // 获取城市门店列表
+    Route::get('shops/cities/{cityName}', [\App\Http\Controllers\Api\ShopsController::class, 'indexShops']);
+    // 获取门店详情
+    Route::get('shops/{id}', [\App\Http\Controllers\Api\ShopsController::class, 'show']);
+    //获取门店的评论
+    Route::get('shops/{id}/discusses', [\App\Http\Controllers\Api\ShopDiscussController::class, 'index']);
 });
 
 // 后台接口
