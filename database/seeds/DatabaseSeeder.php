@@ -94,6 +94,9 @@ class DatabaseSeeder extends Seeder
         DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'32\', \'App_Http_Controllers_AdminApi_FqController\', \'create\', \'添加常见问题\', NULL, NULL);');
         DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'33\', \'App_Http_Controllers_AdminApi_FqController\', \'update\', \'编辑常见问题\', NULL, NULL);');
         DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'34\', \'App_Http_Controllers_AdminApi_FqController\', \'delete\', \'删除常见问题\', NULL, NULL);');
+        DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'37\', \'App_Http_Controllers_AdminApi_PayNoticesController\', \'create\', \'添加支付须知\', NULL, NULL);');
+        DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'35\', \'App_Http_Controllers_AdminApi_ConfigController\', \'show\', \'获取单个配置\', NULL, NULL);');
+        DB::insert('INSERT INTO `permissions` (`id`, `controller`, `method`, `note`, `created_at`, `updated_at`) VALUES (\'36\', \'App_Http_Controllers_AdminApi_ConfigController\', \'update\', \'修改配置\', NULL, NULL);');
 
         // 角色权限
         DB::insert('INSERT INTO `role_permissions` (`role_id`, `permission_id`, `created_at`, `updated_at`) VALUES

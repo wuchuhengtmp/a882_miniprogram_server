@@ -97,4 +97,5 @@ class GoodsModel extends BaseModel
     {
         return (bool) $value;
     }
+
 }

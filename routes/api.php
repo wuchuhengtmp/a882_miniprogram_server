@@ -32,6 +32,14 @@ Route::prefix('wechat')->name('api.wechat.')->group(function() {
     Route::get('shops/{id}', [\App\Http\Controllers\Api\ShopsController::class, 'show']);
     //获取门店的评论
     Route::get('shops/{id}/discusses', [\App\Http\Controllers\Api\ShopDiscussController::class, 'index']);
+    // 获取门店商品
+    Route::get('shops/{id}/goods', [\App\Http\Controllers\Api\ShopGoodsController::class, 'index']);
+    // 车型分类
+    Route::get('categores', [\App\Http\Controllers\Api\CategoresController::class, 'index']);
+    // 品牌列表
+    Route::get('brands', [\App\Http\Controllers\Api\BrandsController::class, 'index']);
+    // 标签列表
+    Route::get('tags', [\App\Http\Controllers\Api\TagsController::class, 'index']);
 });
 
 // 后台接口
@@ -118,9 +126,16 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
         Route::delete('fq/{id}', [\App\Http\Controllers\AdminApi\FqController::class, 'destroy']);
         //更新常见问题
         Route::patch('fq/{id}', [\App\Http\Controllers\AdminApi\FqController::class, 'update']);
+        // 添加支付须知
+        Route::post('payNotices', [\App\Http\Controllers\AdminApi\PayNoticesController::class, 'create']);
+        // 支付须知列表
+        Route::get('payNotices', [\App\Http\Controllers\AdminApi\PayNoticesController::class, 'index']);
+        // 修改须知
+        Route::patch('payNotices/{id}', [\App\Http\Controllers\AdminApi\PayNoticesController::class, 'edit']);
     });
     // 获取基本信息
     Route::get('bases', [\App\Http\Controllers\AdminApi\BasesController::class, 'index']);
+
 });
 
 

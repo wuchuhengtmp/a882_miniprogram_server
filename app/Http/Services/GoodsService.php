@@ -31,16 +31,16 @@ class GoodsService
          $GoodsModel->pledge_cost = $params['pledge_cost'];
          $GoodsModel->status = $params['status'];
          DB::beginTransaction();
-         if (
-         $GoodsModel->save() &&
-         AlbumsModel::withTrashed()
-             ->where('id', $params['banner_id'])
-             ->restore()
-         ) {
+         try {
+             $GoodsModel->save();
+             AlbumsModel::withTrashed()
+                 ->where('id', $params['banner_id'])
+                 ->restore();
              DB::commit();
              return true;
+         } catch (\Exception $e) {
+             DB::rollBack();
+             throw new InnerErrorException("车辆入库到门店id: {$userId}失败", 40002, 4);
          }
-         DB::rollBack();
-         throw new InnerErrorException("车辆入库到门id: {$userId}失败");
      }
 }
