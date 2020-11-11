@@ -1,8 +1,6 @@
 <?php
 
-
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class CategoresSeeder extends Seeder
 {
@@ -13,15 +11,13 @@ class CategoresSeeder extends Seeder
      */
     public function run()
     {
-        DB::insert('INSERT INTO `categores` (`id`, `name`) VALUES
-            (\'1\', \'新能源\'),
-            (\'2\', \'小型轿车\'),
-            (\'3\', \'中型轿车\'),
-            (\'4\', \'大型轿车\'),
-            (\'5\', \'SUV\'),
-            (\'6\', \'商务型\'),
-            (\'7\', \'敞篷 四座\'),
-            (\'8\', \'敞篷  两座\')
-        ');
+        DB::insert('INSERT INTO `categores` VALUES (\'1\', \'新能源\', \'0\', null, null);');
+        DB::insert('INSERT INTO `categores` VALUES (\'2\', \'小型轿车\', \'0\', null, null);');
+        DB::insert('INSERT INTO `categores` VALUES (\'3\', \'中型轿车\', \'0\', null, null);');
+        DB::insert('INSERT INTO `categores` VALUES (\'4\', \'大型轿车\', \'0\', null, null);');
+        DB::insert('INSERT INTO `categores` VALUES (\'5\', \'SUV\', \'0\', null, null);');
+        DB::insert('INSERT INTO `categores` VALUES (\'6\', \'商务型\', \'0\', null, null);');
+        DB::insert('INSERT INTO `categores` VALUES (\'7\', \'敞篷 四座\', \'0\', null, null);');
+        DB::insert('INSERT INTO `categores` VALUES (\'8\', \'敞篷  两座\', \'0\', null, null);');
     }
 }

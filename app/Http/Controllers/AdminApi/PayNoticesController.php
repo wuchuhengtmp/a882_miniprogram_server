@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminApi;
 
 use App\Exceptions\InnerErrorException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\PayNoticesDestroyRequest;
 use App\Models\AlbumsModel;
 use App\Models\GoodsTagsModel;
 use Illuminate\Http\Request;
@@ -58,6 +59,22 @@ class PayNoticesController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             throw new InnerErrorException('编辑失败,内部错误', 40002, 4);
+        }
+        return $this->successResponse();
+    }
+
+    public function destroy($id, PayNoticesDestroyRequest $request, PayNoticesModel $payNoticesModel)
+    {
+        $PayNotice = $payNoticesModel->where('id', $id)->first();
+        DB::beginTransaction();
+        $albumId = $PayNotice->notice_id;
+        $PayNotice->delete();
+        AlbumsModel::where('id', $albumId)->delete();
+        try{
+            DB::commit();
+        }catch (\Exception $e) {
+            DB::rollBack();
+            throw new InnerErrorException('删除失败');
         }
         return $this->successResponse();
     }

@@ -40,6 +40,13 @@ Route::prefix('wechat')->name('api.wechat.')->group(function() {
     Route::get('brands', [\App\Http\Controllers\Api\BrandsController::class, 'index']);
     // 标签列表
     Route::get('tags', [\App\Http\Controllers\Api\TagsController::class, 'index']);
+    // 支付须知
+    Route::get('payNotices', [\App\Http\Controllers\Api\PayNoticesController::class, 'index']);
+    // 支付 测试接口
+    Route::post('pay', [\App\Http\Controllers\Api\PayController::class, 'create']);
+    // 授权登录
+    Route::post('authentications', [\App\Http\Controllers\Api\AuthenticationsController::class, 'create']);
+
 });
 
 // 后台接口
@@ -132,6 +139,8 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
         Route::get('payNotices', [\App\Http\Controllers\AdminApi\PayNoticesController::class, 'index']);
         // 修改须知
         Route::patch('payNotices/{id}', [\App\Http\Controllers\AdminApi\PayNoticesController::class, 'edit']);
+        // 删除须知
+        Route::delete('payNotices/{id}', [\App\Http\Controllers\AdminApi\PayNoticesController::class, 'destroy']);
     });
     // 获取基本信息
     Route::get('bases', [\App\Http\Controllers\AdminApi\BasesController::class, 'index']);
