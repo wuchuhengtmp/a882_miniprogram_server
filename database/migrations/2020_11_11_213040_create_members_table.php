@@ -18,9 +18,19 @@ class CreateMembersTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->id();
+            $table->string('avatar_url')->comment('头像');
+            $table->string('city')->comment('城市');
+            $table->string('country')->comment('国家');
+            $table->string('gender')->comment('0女1男2不知道');
+            $table->string('language')->comment('语言');
+            $table->string('nickName')->comment('昵称');
+            $table->string('province')->comment('省份');
+            $table->string('open_id')->comment('识别码');
+            $table->string('phone')->nullable()->comment('手机号');
+            $table->string('session_key')->comment('用于解密手机号');
             $table->timestamps();
         });
-        DB::select("ALTER TABLE {$this->tableName} COMMENT = '客户成员表'");
+        DB::select("ALTER TABLE {$this->tableName} COMMENT = '客户表'");
     }
 
     /**

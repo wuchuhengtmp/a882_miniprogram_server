@@ -58,5 +58,7 @@ class AlbumsSeeder extends Seeder
         DB::insert(' INSERT INTO `albums` VALUES (\'45\', \'ulkS8uT3sPKtFRlBShjyXbnJYt8HkMHjvvSj4PBs.png\', \'public\', null, \'2020-11-11 09:21:47\', \'2020-11-11 09:22:13\'); ');
         DB::insert('INSERT INTO `albums` VALUES (\'46\', \'1Dt6evzT2yZ3eYTzwOhYkybG6xk6bWjYGinHY74n.png\', \'public\', null, \'2020-11-11 09:22:28\', \'2020-11-11 09:22:40\');');
         DB::insert('INSERT INTO `albums` VALUES (\'47\', \'5DYCvV3mOhgPeB7udIcDWlSQnYy5W2G1lrsESRpj.png\', \'public\', null, \'2020-11-11 09:22:48\', \'2020-11-11 09:23:02\');');
+        DB::insert('INSERT INTO `albums` (`id`, `path`, `disk`, `deleted_at`, `created_at`, `updated_at`) VALUES (\'48\', \'C1OIPNCbMMfUuSUdkxy0PVt9QsJtP4tpLYAIpwJ9.jpeg\', \'public\', NULL, \'2020-11-03 15:51:51\', \'2020-11-03 15:51:52\');');
+
     }
 }

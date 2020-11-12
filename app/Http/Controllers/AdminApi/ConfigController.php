@@ -33,7 +33,7 @@ class ConfigController extends Controller
     {
         $value = getConfigByKey($key);
         // 图片配置
-        if (in_array($key, ['BACK_LOGO'])) {
+        if (in_array($key, ['BACK_LOGO', 'APP_LOGO'])) {
             $Album = AlbumsModel::where('id', $value)->first();
             return $this->successResponse([
                 'id' => $Album->id,
@@ -54,7 +54,7 @@ class ConfigController extends Controller
         $value = $request->input('value');
         DB::beginTransaction();
         try {
-            if (in_array($key, ['BACK_LOGO'])) {
+            if (in_array($key, ['BACK_LOGO', 'APP_LOGO'])) {
                 $oldValue = getConfigByKey($key);
                 AlbumsModel::where('id', $oldValue)->delete();
                 AlbumsModel::withTrashed()->where('id', $value)->restore();

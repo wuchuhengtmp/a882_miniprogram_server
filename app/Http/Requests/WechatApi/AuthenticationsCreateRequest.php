@@ -33,7 +33,14 @@ class AuthenticationsCreateRequest extends FormRequest
         return [
             'code' => [
                 'required'
-            ]
+            ],
+            'avatarUrl' => 'required',
+            'city' => 'required',
+            'country' => 'required',
+            'gender' => 'required',
+            'language' => 'required',
+            'nickName' => 'required',
+            'province' => 'required',
         ];
     }
 }
