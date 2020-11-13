@@ -28,6 +28,10 @@ class CreateMembersTable extends Migration
             $table->string('open_id')->comment('识别码');
             $table->string('phone')->nullable()->comment('手机号');
             $table->string('session_key')->comment('用于解密手机号');
+            $table->integer('member_role_id')
+                ->default(1)
+                ->comment('用户角色');
+            $table->string('platform')->comment('账号来源平台wechat微信alipay支付宝');
             $table->timestamps();
         });
         DB::select("ALTER TABLE {$this->tableName} COMMENT = '客户表'");

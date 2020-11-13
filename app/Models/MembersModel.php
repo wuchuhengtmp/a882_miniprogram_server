@@ -19,7 +19,9 @@ class MembersModel extends Authenticatable implements JWTSubject
         'nickName',
         'province',
         'open_id',
-        'session_key'
+        'session_key',
+        'member_role_id',
+        'platform'
     ];
 
     public function getJWTIdentifier()
@@ -33,4 +35,31 @@ class MembersModel extends Authenticatable implements JWTSubject
             'from' => 'member'
         ];
     }
+
+    public function getMemberRoleAttribute()
+    {
+        $MemberRole = MemberRolesModel::where('id', $this->member_role_id)->first();
+        return [
+            'id' => $MemberRole->id,
+            'name' => $MemberRole->name
+        ];
+    }
+
+    public function getGenderAttribute($value)
+    {
+        $value = (int) $value;
+        $returnData = [
+            'id' => $value,
+            'name' => '未知'
+        ];
+        switch ($value) {
+            case 0:
+                $returnData['name'] = '女';
+                break;
+            case 1:
+                $returnData['name'] = '男';
+        }
+        return $returnData;
+    }
+
 }

@@ -141,6 +141,20 @@ Route::prefix('admin')->name('api.admin.')->group(function() {
         Route::patch('payNotices/{id}', [\App\Http\Controllers\AdminApi\PayNoticesController::class, 'edit']);
         // 删除须知
         Route::delete('payNotices/{id}', [\App\Http\Controllers\AdminApi\PayNoticesController::class, 'destroy']);
+        // 创建优惠卷
+        Route::post('coupons', [\App\Http\Controllers\AdminApi\CouponsController::class, 'create']);
+        // 优惠卷列表
+        Route::get('coupons', [\App\Http\Controllers\AdminApi\CouponsController::class, 'index']);
+        // 编辑优惠卷
+        Route::patch('coupons/{id}', [\App\Http\Controllers\AdminApi\CouponsController::class, 'edit']);
+        // 删除优惠卷
+        Route::delete('coupons/{id}', [\App\Http\Controllers\AdminApi\CouponsController::class, 'destroy']);
+        // 用户列表
+        Route::get('members', [\App\Http\Controllers\AdminApi\MembersController::class, 'index']);
+        // 编辑用户
+        Route::patch('members/{id}', [\App\Http\Controllers\AdminApi\MembersController::class, 'edit']);
+        // 用户解色表
+        Route::get('memberRoles', [\App\Http\Controllers\AdminApi\MemberRolesController::class, 'index']);
     });
     // 获取基本信息
     Route::get('bases', [\App\Http\Controllers\AdminApi\BasesController::class, 'index']);

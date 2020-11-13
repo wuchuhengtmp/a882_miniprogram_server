@@ -30,5 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserBannersSeeder::class);
         $this->call(UserRolesSeeder::class);
         $this->call(UsersSeeder::class);
+        $this->call(CouponsSeeder::class);
+        $this->call(MemberRolesSeeder::class);
     }
 }
