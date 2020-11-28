@@ -47,6 +47,9 @@ class AuthenticationsController extends Controller
             $membersModel->open_id = $openId;
             $membersModel->platform = 'wechat';
             $membersModel->member_role_id = 1;
+
+
+
             if ( $membersModel->save() ) {
                 return $this->successResponse();
             }

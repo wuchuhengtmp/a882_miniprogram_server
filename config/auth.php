@@ -48,7 +48,7 @@ return [
         ],
         'member' => [
             'driver' => 'jwt',
-            'provider' => 'users',
+            'provider' => 'member',
             'hash' => false,
         ],
     ],

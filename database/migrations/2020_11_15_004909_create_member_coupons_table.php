@@ -21,7 +21,7 @@ class CreateMemberCouponsTable extends Migration
             $table->float('cost')->comment('费用');
             $table->string('name')->comment('名称');
             $table->string('des')->comment('说明');
-            $table->integer('expired_day')->comment('期限时长');
+            $table->timestamp('expired_at')->comment('期限时长');
             $table->integer('album_id')->comment('封面的相册id');
             $table->integer('is_alert')->comment('1已经提醒0不是');
             $table->timestamps();

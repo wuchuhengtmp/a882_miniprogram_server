@@ -45,11 +45,12 @@ Route::prefix('wechat')->name('api.wechat.')->group(function() {
     // 授权登录
     Route::post('authentications', [\App\Http\Controllers\Api\AuthenticationsController::class, 'create']);
 
-    Route::middleware('auth:api')->group(function() {
+    Route::middleware('auth:member')->group(function() {
         // 支付 测试接口
         Route::post('pay', [\App\Http\Controllers\Api\PayController::class, 'create']);
     });
 
+    Route::get('test', [\App\Http\Controllers\TestController::class, 'index']);
 
 });
 
