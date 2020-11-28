@@ -42,10 +42,14 @@ Route::prefix('wechat')->name('api.wechat.')->group(function() {
     Route::get('tags', [\App\Http\Controllers\Api\TagsController::class, 'index']);
     // 支付须知
     Route::get('payNotices', [\App\Http\Controllers\Api\PayNoticesController::class, 'index']);
-    // 支付 测试接口
-    Route::post('pay', [\App\Http\Controllers\Api\PayController::class, 'create']);
     // 授权登录
     Route::post('authentications', [\App\Http\Controllers\Api\AuthenticationsController::class, 'create']);
+
+    Route::middleware('auth:api')->group(function() {
+        // 支付 测试接口
+        Route::post('pay', [\App\Http\Controllers\Api\PayController::class, 'create']);
+    });
+
 
 });
 
